@@ -20,7 +20,8 @@ See the example below where dark1 is mismatched.
 
 
 ### global-variables.scss
-
+    
+    $lightOrange1: #f4c842;
     $dark1: #111;
     $dark2: #555;
   
@@ -30,7 +31,7 @@ would look like this
 
 ### global-variables.scss post webpack build.
 
-    $dark1:#333;$dark2:#555;$dark3:#777;
+    $lightOrange1:#f4c842;$dark1:#333;$dark2:#555;$dark3:#777;
 
 ## How to use:
 1) Copy and paste the JsToScssPlugin_min file in the build directory into your project and require it in webpack.config.js.
