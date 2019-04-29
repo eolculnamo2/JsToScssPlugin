@@ -29,12 +29,11 @@ class JsToSccsPlugin {
             if(y.split(':')[0] !== x.split(':')[0]) {
               return y;
             }
-          }).join(';') + ';';
+          }).join(';') + ';'+x;
         });
 
         // Join res no whitespace(resNoWp) and newScss then writeFile.
-        const finalScss = resNoWp += newScss;
-        fs.writeFile(this.scssSrc, finalScss, (err1,res1) => callback() );
+        fs.writeFile(this.scssSrc, resNoWp, (err1,res1) => callback() );
       });
     });
 
