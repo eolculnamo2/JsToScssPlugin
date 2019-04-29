@@ -32,7 +32,7 @@ class JsToSccsPlugin {
           }).join(';') + ';'+x;
         });
 
-        // Join res no whitespace(resNoWp) and newScss then writeFile.
+        //write file
         fs.writeFile(this.scssSrc, resNoWp, (err1,res1) => callback() );
       });
     });
