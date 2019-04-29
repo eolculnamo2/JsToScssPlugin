@@ -1,7 +1,7 @@
 
 const path = require('path');
 const JsToScssPlugin = require('./src/JsToSccsPlugin');
-const jsSrc = require('./src/JsToSccsPlugin');
+const jsSrc = require('./sample/jsStyleConfig');
 
 module.exports = {
   entry: './sample/index.js',

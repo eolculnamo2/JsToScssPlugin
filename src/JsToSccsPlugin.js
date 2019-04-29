@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const fs = require('fs');
 const path = require('path');
 
@@ -14,15 +13,15 @@ class JsToSccsPlugin {
 
     compiler.hooks.beforeCompile.tapAsync('JsToSccsPlugin', (params, callback) => {
 
-      const addGlobalScss = scssInp => {
-        let newScss = '';
-        for(let x in scssInp) {
-
-        }
+      let newScss = '';
+      for(const x in this.jsSrc) {
+        newScss += `$${x}:${this.jsSrc[x]};`;
       }
 
-      fs.readFile(this.scssSrc, 'utf8', (err,res) => );
-      callback();
+      fs.readFile(this.scssSrc, 'utf8', (err,res) => {
+        const finalScss = res += newScss;
+        fs.writeFile(this.scssSrc, finalScss, (err,res) => callback() );
+      });
     });
   }
 }
