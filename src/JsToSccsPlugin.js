@@ -13,16 +13,35 @@ class JsToSccsPlugin {
 
     compiler.hooks.beforeCompile.tapAsync('JsToSccsPlugin', (params, callback) => {
 
-      let newScss = '';
+      // Create string of scssVariables to write to scss file
+      let newScss = new Set();
       for(const x in this.jsSrc) {
-        newScss += `$${x}:${this.jsSrc[x]};`;
+        newScss.add(`$${x}:${this.jsSrc[x]};`);
       }
 
+      // Append newScss to existing scssSrc file.
       fs.readFile(this.scssSrc, 'utf8', (err,res) => {
-        const finalScss = res += newScss;
-        fs.writeFile(this.scssSrc, finalScss, (err,res) => callback() );
+
+        // Delete previous scss variables.
+        let resNoWp = this.removeWhiteSpace(res);
+        newScss.forEach( x => {
+          resNoWp = resNoWp.split(';').filter(y => {
+            if(y.split(':')[0] !== x.split(':')[0]) {
+              return y;
+            }
+          }).join(';') + ';';
+        });
+
+        // Join res no whitespace(resNoWp) and newScss then writeFile.
+        const finalScss = resNoWp += newScss;
+        fs.writeFile(this.scssSrc, finalScss, (err1,res1) => callback() );
       });
     });
+
+  }
+
+  removeWhiteSpace(str) {
+    return str.replace(/(\r\n|\n|\r| )/gm, "");
   }
 }
 
