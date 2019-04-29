@@ -1,9 +1,9 @@
 
 const path = require('path');
-const JsToScssPlugin = require('./src/JsToSccsPlugin');
+const JsToScssPlugin = require('./build/JsToScssPlugin_min');
 const jsSrc = require('./sample/jsStyleConfig');
 
-module.exports = {
+const testConfig = {
   entry: './sample/index.js',
   output: {
     path: path.resolve('./bundle'),
@@ -33,3 +33,32 @@ module.exports = {
     ]
   }
 }
+
+const buildModule = {
+  entry: './src/JsToSccsPlugin.js',
+  output: {
+    path: path.resolve('./build'),
+    filename: 'JsToScssPlugin_min.js',
+    library: "my-library",
+    libraryTarget: "umd"
+  },
+  target: 'node',
+  node: {
+    fs: 'empty'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname,'src'),
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['env']
+        }
+      }
+    ]
+  }
+}
+
+module.exports = process.env.NODE_ENV === 'production' ? buildModule : testConfig;
