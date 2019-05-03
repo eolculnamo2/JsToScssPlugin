@@ -14,7 +14,7 @@ class JsToSccsPlugin {
     compiler.hooks.beforeCompile.tapAsync('JsToSccsPlugin', (params, callback) => {
 
       // Create string of scssVariables to write to scss file
-      let newScss = new Set();
+      const newScss = new Set();
       for(const x in this.jsSrc) {
         newScss.add(`$${x}:${this.jsSrc[x]};`);
       }
